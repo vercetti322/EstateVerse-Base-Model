@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Prediciton</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column; /* Changed to column to ensure the form is centered */
+            align-items: center; /* Adjusted to start from the top */
+            min-height: 100vh; /* Changed to min-height to ensure the full content is visible */
+            margin: 0;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+        
+        h1, form {
+            width: 150%;
+            max-width: 600px;
+        }
+        
+        form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }        
+    </style>
+</head>
+<body>
+    <h2>House Prediciton</h2>
+    <!-- JSON input textarea -->
+    <label for="jsonInput">JSON Input:</label>
+    <textarea id="jsonInput" rows="5" cols="50" placeholder="Enter JSON data here"></textarea>
+    <button type="button" onclick="fillForm()">Auto Fill Form</button>
+    <form id="prediction-form" onsubmit="predict(); return false;" method="post">
+        <label for="active">Active:</label>
+        <select id="active" name="active">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+    
+        <label for="bathroom">Bathroom:</label>
+        <input type="number" id="bathroom" name="bathroom" placeholder="Enter bathroom count"><br>
+
+        <label for="floor">Floor:</label>
+        <input type="number" id="floor" name="floor" placeholder="Enter floor number"><br>
+    
+        <label for="furnishingDesc">Furnishing Description:</label>
+        <input type="text" id="furnishingDesc" name="furnishingDesc" placeholder="Enter furnishing description"><br>
+    
+        <label for="isMaintenance">Maintenance:</label>
+        <select id="isMaintenance" name="isMaintenance">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+    
+        <label for="loanAvailable">Loan Available:</label>
+        <select id="loanAvailable" name="loanAvailable">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+    
+        <label for="locality">Locality:</label>
+        <input type="text" id="locality" name="locality" placeholder="Enter locality"><br>
+    
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="Enter location"><br>
+    
+        <label for="parking">Parking:</label>
+        <input type="text" id="parking" name="parking" placeholder="Enter parking type"><br>
+    
+        <label for="propertyType">Property Type:</label>
+        <input type="text" id="propertyType" name="propertyType" placeholder="Enter property type"><br>
+    
+        <label for="property_age">Property Age:</label>
+        <input type="number" id="property_age" name="property_age" placeholder="Enter property age"><br>
+    
+        <label for="property_size">Property Size:</label>
+        <input type="number" id="property_size" name="property_size" placeholder="Enter property size"><br>
+    
+        <label for="sharedAccomodation">Shared Accommodation:</label>
+        <select id="sharedAccomodation" name="sharedAccomodation">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+    
+        <label for="swimmingPool">Swimming Pool:</label>
+        <select id="swimmingPool" name="swimmingPool">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="totalFloor">Total Floor:</label>
+        <input type="number" id="totalFloor" name="totalFloor" placeholder="Enter total floor count"><br>
+
+        <label for="type_bhk">Type BHK:</label>
+        <input type="text" id="type_bhk" name="type_bhk" placeholder="Enter BHK type"><br>
+
+        <label for="LIFT">Lift:</label>
+        <select id="LIFT" name="LIFT">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="GYM">Gym:</label>
+        <select id="GYM" name="GYM">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="INTERNET">Internet:</label>
+        <select id="INTERNET" name="INTERNET">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="AC">Air Conditioning:</label>
+        <select id="AC" name="AC">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="CLUB">Club:</label>
+        <select id="CLUB" name="CLUB">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="INTERCOM">Intercom:</label>
+        <select id="INTERCOM" name="INTERCOM">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="POOL">Pool:</label>
+        <select id="POOL" name="POOL">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="CPA">Community Parking Area:</label>
+        <select id="CPA" name="CPA">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="FS">Fire Safety:</label>
+        <select id="FS" name="FS">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="SERVANT">Servant Room:</label>
+        <select id="SERVANT" name="SERVANT">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="SECURITY">Security:</label>
+        <select id="SECURITY" name="SECURITY">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="SC">Shopping Complex:</label>
+        <select id="SC" name="SC">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="GP">Gas Pipeline:</label>
+        <select id="GP" name="GP">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="PARK">Park:</label>
+        <select id="PARK" name="PARK">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="RWH">Rainwater Harvesting:</label>
+        <select id="RWH" name="RWH">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="STP">Sewage Treatment Plant:</label>
+        <select id="STP" name="STP">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="HK">Housekeeping:</label>
+        <select id="HK" name="HK">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="PB">Power Backup:</label>
+        <select id="PB" name="PB">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <label for="VP">Visitor Parking:</label>
+        <select id="VP" name="VP">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select><br>
+
+        <button type="submit" onclick="predict()">Predict</button>
+    </form>
+    
+
+    <div id="result" style="
+    display: block;
+    width: 60%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    text-align: center;
+"></div>
+
+    <script>
+        function fillForm() {
+            // Get the JSON input from the textarea
+            console.log('fillForm function called');
+            const jsonInput = document.getElementById('jsonInput').value;
+            console.log('JSON Input:', jsonInput);
+    
+            try {
+                // Parse the JSON string
+                const jsonData = JSON.parse(jsonInput);
+    
+                // Fill the form fields with the parsed data
+                for (const key in jsonData) {
+                    if (jsonData.hasOwnProperty(key)) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            // Set the value of the form field
+                            element.value = jsonData[key];
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        }
+        
+        function predict() 
+        {
+            console.log('Predict function executed');
+            
+            const form = document.getElementById('prediction-form');
+            const formData = new FormData(form);
+            
+            // Send the prediction data to the /predict route using a POST request
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)),
+            })
+            .then(response => {
+                console.log('Response Status:', response.status);
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('Response Data:', responseData);
+                
+               // Access the prediction results
+               const depositPred = responseData.deposit_pred;
+               const rentPred = responseData.rent_pred;
+
+               // Display the prediction results on the page
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = 'Deposit: ' + depositPred + ', Rent: ' + rentPred;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                console.log('Fetch request failed');
+            });
+        }
+        
+    </script>
+</body>
+</html>
